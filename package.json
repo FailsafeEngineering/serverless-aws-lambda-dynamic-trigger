@@ -33,6 +33,20 @@
     "url": "https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger/issues"
   },
   "homepage": "https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger#readme",
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.54.1",
+    "lodash.clonedeep": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.7",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.17.7",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jsdoc-to-markdown": "^7.1.1",
+    "standard": "^16.0.4"
+  },
   "babel": {
     "presets": [
       [
@@ -56,22 +70,15 @@
       "pre-commit": "npm run documentation"
     }
   },
-  "devDependencies": {
-    "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.7",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/register": "^7.17.7",
-    "husky": "^7.0.4",
-    "jest": "^27.5.1",
-    "jsdoc-to-markdown": "^7.1.1",
-    "standard": "^16.0.4"
-  },
   "jest": {
     "testEnvironment": "node",
     "modulePaths": [
       "./src"
     ],
     "verbose": true,
+    "modulePathIgnorePatterns": [
+      "./lib"
+    ],
     "collectCoverage": true,
     "coverageReporters": [
       "text",
