@@ -75,6 +75,9 @@
     "modulePaths": [
       "./src"
     ],
+    "setupFilesAfterEnv": [
+      "./src/jest.setup"
+    ],
     "verbose": true,
     "modulePathIgnorePatterns": [
       "./lib"
