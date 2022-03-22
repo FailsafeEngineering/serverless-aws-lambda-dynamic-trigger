@@ -150,7 +150,6 @@ describe('THE constructor', () => {
       })
 
       it('SHOULD set the region in the config to the value of AWS_DEFAULT_REGION env var', () => {
-        console.log(`WWWWWWWWWWWWWWRRRRRRRRRRRRRR: ${process.env.AWS_DEFAULT_REGION}`)
         const instance = new SLSAWSLambdaDynamicTrigger(serverlessMockRegionMissing)
         expect(instance.config).toHaveProperty('region', process.env.AWS_DEFAULT_REGION)
       })
