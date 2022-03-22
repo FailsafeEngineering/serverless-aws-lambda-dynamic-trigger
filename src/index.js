@@ -47,7 +47,13 @@
  *         ssmPath: "{/path/to/triggers}"
  */
 import { SSMClient, GetParametersCommand } from '@aws-sdk/client-ssm'
+
 const REGION = process.env.AWS_DEFAULT_REGION
+const serviceMap = new Map([
+  ['sns', 'sns'],
+  ['sqs', 'sqs'],
+  ['kinesis', 'stream']
+])
 
 /**
  * @class Represents a trigger registrar instance
@@ -63,17 +69,6 @@ class SLSAWSLambdaDynamicTrigger {
     this.validateConfig(serverless)
     this.setupState(serverless)
   }
-
-  /**
-   * Maps the aws services with the sls counterparts
-   * @static
-   * @type {Map}
-   */
-  static serviceMap = new Map([
-    ['sns', 'sns'],
-    ['sqs', 'sqs'],
-    ['kinesis', 'stream']
-  ])
 
   /**
    * Validates if the plugin config exists.
@@ -130,11 +125,11 @@ class SLSAWSLambdaDynamicTrigger {
    */
   async extendFunctionConfigs () {
     const ssmPaths = this.config.functions.map(({ ssmPath }) => { return ssmPath })
-    const { Parameters: parameters } = await this.ssmClient.send(new GetParametersCommand({Names: ssmPaths}))
+    const { Parameters: parameters } = await this.ssmClient.send(new GetParametersCommand({ Names: ssmPaths }))
 
     return this.config.functions.reduce((accu, { name, ssmPath }) => {
-      const { Value: value } = parameters.find(( { Name } ) => Name === ssmPath )
-      accu = [ ...accu, { name, ssmPath, value }]
+      const { Value: value } = parameters.find(({ Name }) => Name === ssmPath)
+      accu = [...accu, { name, ssmPath, value }]
       return accu
     }, [])
   }
@@ -147,17 +142,17 @@ class SLSAWSLambdaDynamicTrigger {
    * @param {Object} value - The serverless representation of the function
    * @returns {void}
    */
-  registerTriggersDynamically(foundFunctionConfig, key, value) {
+  registerTriggersDynamically (foundFunctionConfig, key, value) {
     const { value: valueInConfig } = foundFunctionConfig
     const arns = valueInConfig.split(',')
     const re = /^(?:[^:]*:){2}([^:]*)/
     const servicesPlusARNs = arns.map((arn) => {
       const awsServiceSearchResult = re.exec(arn)
-      const slsService = SLSAWSLambdaDynamicTrigger.serviceMap.get(awsServiceSearchResult[1])
+      const slsService = serviceMap.get(awsServiceSearchResult[1])
       if (!slsService) {
         throw new Error('Wrong aws service in arn. Only sns, sqs and kinesis can be handled.')
       }
-      return { [slsService]:  arn }
+      return { [slsService]: arn }
     })
     value.events = servicesPlusARNs
     this.serverless.cli.log(`SLSPluginSNSEventReg - triggers will be registered for function ${key}: ${servicesPlusARNs.map((servicePlusARN) => Object.values(servicePlusARN)[0]).toString()}`)
@@ -173,7 +168,7 @@ class SLSAWSLambdaDynamicTrigger {
     const extendedFunctionConfigs = await this.extendFunctionConfigs()
 
     for (const [key, value] of Object.entries(this.serverless.service.functions)) {
-      const foundFunctionConfig = extendedFunctionConfigs.find(({ name }) => key === name )
+      const foundFunctionConfig = extendedFunctionConfigs.find(({ name }) => key === name)
       if (foundFunctionConfig) {
         this.registerTriggersDynamically(foundFunctionConfig, key, value)
       }
