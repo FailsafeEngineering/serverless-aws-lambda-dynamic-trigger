@@ -1,0 +1,95 @@
+{
+  "name": "@kakkuk/serverless-aws-lambda-dynamic-trigger",
+  "version": "0.0.0",
+  "description": "It allows to register triggers dynamically.",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "documentation": "jsdoc2md ./src/*.js > README.md",
+    "prepare": "node_modules/@babel/cli/bin/babel.js src --out-dir lib",
+    "lint": "npx standard",
+    "lint:fix": "npx standard --fix",
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger.git"
+  },
+  "keywords": [
+    "serverless",
+    "aws",
+    "lambda",
+    "dynamic",
+    "trigger"
+  ],
+  "author": "Failsafe Engineering <hello@failsafe.engineering>",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger/issues"
+  },
+  "homepage": "https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger#readme",
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.54.1",
+    "lodash.clonedeep": "^4.5.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.7",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/register": "^7.17.7",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jsdoc-to-markdown": "^7.1.1",
+    "standard": "^16.0.4"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "sourceMaps": "inline"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run documentation"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "modulePaths": [
+      "./src"
+    ],
+    "setupFilesAfterEnv": [
+      "./src/jest.setup"
+    ],
+    "verbose": true,
+    "modulePathIgnorePatterns": [
+      "./lib"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "text-summary"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}
