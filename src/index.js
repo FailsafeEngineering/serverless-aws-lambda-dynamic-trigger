@@ -4,9 +4,8 @@
  */
 
 /**
- * @module index
+ * @module index.js
  * @description
- *
  * The plugin can register triggers (events) for a lambda function dynamically. At deployment time
  * 1. It fetches the value of a parameter in the Parameters. The value must be a list ARNs sepearted by comma.
  * 2. Parses the individual ARNs.
@@ -24,19 +23,18 @@
  * - arn:aws:sns:eu-west-2:123456654321:topic2
  * This way we can switch features on and off on different stages.
  *
- * The dynamic triger sets needs to ne stored in the Parameter Store of the Systems Manager (SSM) and it should look somewhat like this:
- * @example
- * *Name*: /dev/dynamic-trigger
- * *Value*: arn:aws:sns:eu-west-2:123456654321:topic1,arn:aws:sns:eu-west-2:123456654321:topic2,arn:aws:sns:eu-west-2:123456654321:topic3
+ * The dynamic trigger sets needs to ne stored in the Parameter Store of the Systems Manager (SSM) and it should look somewhat like this:
+ * Name: /dev/dynamic-trigger
+ * Value: arn:aws:sns:eu-west-2:123456654321:topic1,arn:aws:sns:eu-west-2:123456654321:topic2,arn:aws:sns:eu-west-2:123456654321:topic3
  * or
- * *Name*: /prod/dynamic-trigger
- * *Value*: arn:aws:sns:eu-west-2:123456654321:topic1,arn:aws:sns:eu-west-2:123456654321:topic2
+ * Name: /prod/dynamic-trigger
+ * Value: arn:aws:sns:eu-west-2:123456654321:topic1,arn:aws:sns:eu-west-2:123456654321:topic2
  *
  * The config parameters:
+ * - region: the region of the Systems Manager -> Parameter Store
  * - functions:
  *   - name: The name of the function
- *   - ssmPath: Path to ssm which stores the triggers for the function. The value of the parameter should be a list of aws arns.
- * @example
+ *
  * plugins:
  *   - @kakkuk/serverless-aws-lambda-dynamic-trigger
  * custom:
