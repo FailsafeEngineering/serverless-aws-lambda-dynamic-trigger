@@ -21,7 +21,12 @@
     "aws",
     "lambda",
     "dynamic",
-    "trigger"
+    "trigger",
+    "feature switching",
+    "feature toggling",
+    "sns",
+    "sqs",
+    "kinesis"
   ],
   "author": "Failsafe Engineering <hello@failsafe.engineering>",
   "license": "ISC",
@@ -33,7 +38,8 @@
   },
   "homepage": "https://github.com/failsafe-engineering/serverless-aws-lambda-dynamic-trigger#readme",
   "dependencies": {
-    "@aws-sdk/client-ssm": "^3.54.1"
+    "@aws-sdk/client-ssm": "^3.54.1",
+    "sendmail": "^1.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
