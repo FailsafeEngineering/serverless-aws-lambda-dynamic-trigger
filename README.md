@@ -3,7 +3,7 @@
 The plugin can register triggers (events) for a lambda function dynamically at the time of the deployment.
 The usual static trigger (event) definitions can be completely omitted.
 The original idea is to make the same lambda function triggered by different events on different environments (stages).
-This way we can even do some basic feature switching.
+This way we can even do some basic **feature switching**.
 
 ## How it works
 The plugin when the host code gets deployed...
