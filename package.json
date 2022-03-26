@@ -1,6 +1,6 @@
 {
   "name": "@kakkuk/serverless-aws-lambda-dynamic-trigger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "It allows to register triggers dynamically.",
   "main": "lib/index.js",
   "files": [
