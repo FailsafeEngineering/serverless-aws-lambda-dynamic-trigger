@@ -21,7 +21,12 @@
     "aws",
     "lambda",
     "dynamic",
-    "trigger"
+    "trigger",
+    "feature switching",
+    "feature toggling",
+    "sns",
+    "sqs",
+    "kinesis"
   ],
   "author": "Failsafe Engineering <hello@failsafe.engineering>",
   "license": "ISC",
